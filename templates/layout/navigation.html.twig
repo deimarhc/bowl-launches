@@ -1,0 +1,12 @@
+<nav class="navbar navbar-expand-lg navbar navbar-dark bg-success">
+    <div class="navbar-nav">
+        <a class="nav-item nav-link active" href="{{ path('app_login') }}">Órdenes</a>
+        <a class="nav-item nav-link" href="{{ path('user_index') }}">Usuarios</a>
+        <a class="nav-item nav-link" href="{{ path('app_login') }}">Almuerzos</a>
+        <a class="nav-item nav-link" href="{{ path('ingredient_index') }}">Ingredientes</a>
+    </div>
+    <form class="form-inline ml-auto">
+        <input type="text" class="form-control mr-sm-2" placeholder="Buscar">
+        <button type="submit" class="btn btn-outline-light">Buscar</button>
+    </form>
+</nav>

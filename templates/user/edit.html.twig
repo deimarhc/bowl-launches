@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit User{% endblock %}
+
+{% block body %}
+    <h1 class="w-100 h3 mb-3 font-weight-normal">{% trans %}Edit user{% endtrans %}</h1>
+
+    <div class="w-50">
+        {{ include('user/_form.html.twig', {'button_label': 'Update'}) }}
+    </div>
+
+    <div class="w-100 btn-group-lg mt-2">
+        {{ include('user/_delete_form.html.twig') }}
+        <a href="{{ path('user_index') }}" class="btn btn-dark">{% trans %}Back to list{% endtrans %}</a>
+    </div>
+{% endblock %}
