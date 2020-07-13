@@ -1,0 +1,7 @@
+{{ form_start(form) }}
+    {%  if lunch.getPhoto %}
+        <img src="{{ asset('uploads/lunches/' ~ lunch.getPhoto) }}" alt="Foto almuerzo">
+    {% endif %}
+    {{ form_widget(form) }}
+    <button class="btn btn-success">{{ button_label|default('Save')|trans }}</button>
+{{ form_end(form) }}

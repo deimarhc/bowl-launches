@@ -15,11 +15,16 @@ import '../css/app.scss';
 console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
 
 jQuery(document).ready(function() {
-
-    const location = window.location.pathname;
-    // remove active class from all
+    let pathname = window.location.pathname;
+    // remove active class from all.
     $(".navbar .nav-item").removeClass('active');
-
-// add active class to div that matches active url
-    $("a[href='" + location + "'], a[class='nav-item']").addClass('active');
+    if (undefined !== pathname && pathname.includes('admin')) {
+        let split = pathname.split('/');
+        if (split.length > 3) {
+            split = split.slice(0, 3);
+            pathname = split.join('/');
+        }
+        // add active class to div that matches active url.
+        $("a[href*='" + pathname + "'], a[class='nav-item']").addClass('active');
+    }
 });

@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% trans %}Edit Lunch{% endtrans %}{% endblock %}
+
+{% block body %}
+    <h1 class="w-100 h3 mb-3 font-weight-normal">{% trans %}Edit Lunch{% endtrans %}</h1>
+
+    <div class="w-50">
+        {{ include('lunch/_form.html.twig', {'button_label': 'Update'}) }}
+    </div>
+
+    <div class="w-100 btn-group-lg mt-2">
+        {{ include('lunch/_delete_form.html.twig') }}
+        <a href="{{ path('lunch_index') }}" class="btn btn-dark">{% trans %}Back to list{% endtrans %}</a>
+    </div>
+
+{% endblock %}

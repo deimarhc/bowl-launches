@@ -1,0 +1,5 @@
+<form class="w-50 d-inline-block" method="post" action="{{ path('lunch_delete', {'id': lunch.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ lunch.id) }}">
+    <button class="btn btn-danger">{% trans %}Delete{% endtrans %}</button>
+</form>

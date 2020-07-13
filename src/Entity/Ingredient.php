@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\IngredientRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -31,6 +33,16 @@ class Ingredient
      * @ORM\Column(type="integer")
      */
     private $additional_value = 0;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Lunch::class, mappedBy="ingredients")
+     */
+    private $lunches;
+
+    public function __construct()
+    {
+        $this->lunches = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -69,6 +81,34 @@ class Ingredient
     public function setAdditionalValue(int $additional_value): self
     {
         $this->additional_value = $additional_value;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Lunch[]
+     */
+    public function getLunches(): Collection
+    {
+        return $this->lunches;
+    }
+
+    public function addLunch(Lunch $lunch): self
+    {
+        if (!$this->lunches->contains($lunch)) {
+            $this->lunches[] = $lunch;
+            $lunch->addIngredient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLunch(Lunch $lunch): self
+    {
+        if ($this->lunches->contains($lunch)) {
+            $this->lunches->removeElement($lunch);
+            $lunch->removeIngredient($this);
+        }
 
         return $this;
     }
