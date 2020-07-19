@@ -4,31 +4,32 @@ namespace App\Form;
 
 use App\Entity\Ingredient;
 use App\Entity\Lunch;
+use App\Entity\OrderItem;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class LunchType extends AbstractType
+class OrderItemType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('price')
-            ->add('is_custom')
-            ->add('photoImage', FileType::class, [
-                'label' => 'Lunch photo',
-                'mapped' => false,
-                'required' => true,
+            ->add('quantity')
+            ->add('lunch', EntityType::class, [
+                'class' => Lunch::class,
+                'choice_label' => 'name',
+                'choice_attr' => function(Lunch $lunch) {
+                    return ['data-is-custom' => $lunch->getIsCustom()];
+                }
             ])
-            ->add('description')
             ->add('ingredients', EntityType::class, [
                 'class' => Ingredient::class,
                 'choice_label' => 'name',
                 'multiple' => true,
-                'required' => false,
+                'row_attr' => [
+                    'class' => 'ingredients-container'
+                ]
             ])
         ;
     }
@@ -36,7 +37,8 @@ class LunchType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Lunch::class,
+            'data_class' => OrderItem::class,
         ]);
     }
 }
+

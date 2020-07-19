@@ -5,8 +5,11 @@
  * (and its CSS file) in your base layout (base.html.twig).
  */
 require('bootstrap');
+require('multiple-select');
 
 // any CSS you import will output into a single css file (app.scss in this case)
+import 'multiple-select/dist/multiple-select.css';
+import 'multiple-select/dist/themes/bootstrap.css'
 import '../css/app.scss';
 
 // Need jQuery? Install it with "yarn add jquery", then uncomment to import it.
@@ -15,6 +18,13 @@ import '../css/app.scss';
 console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
 
 jQuery(document).ready(function() {
+    $('select').multipleSelect({ selectAll: false });
+    $("#search-orders-input").on("keyup", function() {
+        const value = $(this).val().toLowerCase();
+        $("#orders-table tr").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
     let pathname = window.location.pathname;
     // remove active class from all.
     $(".navbar .nav-item").removeClass('active');

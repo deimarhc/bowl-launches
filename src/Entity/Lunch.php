@@ -44,6 +44,11 @@ class Lunch
      */
     private $ingredients;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $is_custom;
+
     public function __construct()
     {
         $this->ingredients = new ArrayCollection();
@@ -124,6 +129,18 @@ class Lunch
         if ($this->ingredients->contains($ingredient)) {
             $this->ingredients->removeElement($ingredient);
         }
+
+        return $this;
+    }
+
+    public function getIsCustom(): ?bool
+    {
+        return $this->is_custom;
+    }
+
+    public function setIsCustom(bool $is_custom): self
+    {
+        $this->is_custom = $is_custom;
 
         return $this;
     }

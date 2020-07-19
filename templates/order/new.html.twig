@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% trans %}New order{% endtrans %}{% endblock %}
+
+{% block body %}
+    <h1 class="w-100 h3 mb-3 font-weight-normal">{% trans %}Create new order{% endtrans %}</h1>
+
+    <div class="w-50">
+        {{ include('order/_form.html.twig') }}
+    </div>
+
+    <a class="w-100 mt-1 btn btn-dark" href="{{ path('order_index') }}">{% trans %}Back to list{% endtrans %}</a>
+{% endblock %}

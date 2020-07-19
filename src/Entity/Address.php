@@ -141,4 +141,13 @@ class Address
 
         return $this;
     }
+
+    public function getDisplayName(): ?string
+    {
+        return implode(", ", [
+            $this->getAddress(),
+            ucfirst($this->getCity()),
+            ucfirst($this->getDepartment()),
+        ]);
+    }
 }

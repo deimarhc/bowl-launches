@@ -3,3 +3,7 @@
 .navbar {
   margin-bottom: 1rem;
 }
+
+.ms-drop ul > li.hide-radio.selected {
+  background-color: $success;
+}
