@@ -8,7 +8,7 @@ use App\Entity\User;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\ChoiceList\ChoiceList;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -40,11 +40,24 @@ class OrderType extends AbstractType
                 'entry_type' => OrderItemType::class,
                 'entry_options' => ['label' => false],
                 'allow_add' => true,
+                'attr' => [
+                    'class' => 'multiple-list-group multiple-order-item'
+                ]
             ])
         ;
 
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
-            $a = $event;
+            $form = $event->getForm();
+            $form->add('status', ChoiceType::class, [
+                'expanded' => true,
+                'choices' => [
+                    'Created' => Order::CREATED,
+                    'Processed' => Order::PROCESSED,
+                    'Delivered' => Order::DELIVERED,
+                    'Finished' => Order::FINISHED,
+                ],
+                'data' => $event->getData()->getStatus() ?: Order::FINISHED
+            ]);
         });
     }
 

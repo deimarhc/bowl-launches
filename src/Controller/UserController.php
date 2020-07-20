@@ -80,7 +80,13 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $entityManager = $this->getDoctrine()->getManager();
+            // Persist addresses.
+            foreach ($user->getAddresses() as $address) {
+                $address->setUser($user);
+                $entityManager->persist($address);
+            }
+            $entityManager->flush();
 
             return $this->redirectToRoute('user_index');
         }

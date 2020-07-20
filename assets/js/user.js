@@ -1,9 +1,8 @@
 let $collectionHolder;
-console.log('HOLAAA');
 
 // setup an "add a tag" link
 const $addTagButton = $('<button type="button" class="btn btn-outline-success add_addresses_link">Agregar dirección</button>');
-const $newLinkLi = $('<li></li>').append($addTagButton);
+const $newLinkLi = $('<li class="list-group-item"></li>').append($addTagButton);
 
 jQuery(document).ready(function() {
     // Get the ul that holds the collection of tags
@@ -43,6 +42,6 @@ function addAddressForm($collectionHolder, $newLinkLi) {
     $collectionHolder.data('index', index + 1);
 
     // Display the form in the page in an li, before the "Add a tag" link li
-    const $newFormLi = $('<li></li>').append(newForm);
+    const $newFormLi = $('<li class="list-group-item"></li>').append(newForm);
     $newLinkLi.before($newFormLi);
 }

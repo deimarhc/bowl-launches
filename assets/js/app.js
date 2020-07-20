@@ -15,16 +15,19 @@ import '../css/app.scss';
 // Need jQuery? Install it with "yarn add jquery", then uncomment to import it.
 // import $ from 'jquery';
 
-console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
-
 jQuery(document).ready(function() {
+    // Enable multiple select.
     $('select').multipleSelect({ selectAll: false });
+
+    // Order search input.
     $("#search-orders-input").on("keyup", function() {
         const value = $(this).val().toLowerCase();
         $("#orders-table tr").filter(function() {
             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
         });
     });
+
+    // Nav active links.
     let pathname = window.location.pathname;
     // remove active class from all.
     $(".navbar .nav-item").removeClass('active');
@@ -37,4 +40,7 @@ jQuery(document).ready(function() {
         // add active class to div that matches active url.
         $("a[href*='" + pathname + "'], a[class='nav-item']").addClass('active');
     }
+
+    // Add some classes dinamically.
+    $('.multiple-list-group fieldset').addClass('list-group-item mb-0');
 });

@@ -10,9 +10,15 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass=OrderRepository::class)
  * @ORM\Table(name="`order`")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Order
 {
+    public const CREATED = 1;
+    public const PROCESSED = 2;
+    public const DELIVERED = 3;
+    public const FINISHED = 4;
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -46,9 +52,38 @@ class Order
      */
     private $items;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $created;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $changed;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $status;
+
     public function __construct()
     {
         $this->items = new ArrayCollection();
+        // we set up "created"+"modified"
+        $this->setCreated(new \DateTime());
+        if ($this->getChanged() == null) {
+            $this->setChanged(new \DateTime());
+        }
+    }
+
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function updateModifiedDatetime() {
+        // update the modified time
+        $this->setChanged(new \DateTime());
     }
 
     public function getId(): ?int
@@ -133,6 +168,66 @@ class Order
         }
 
         return $this;
+    }
+
+    public function getCreated(): ?\DateTimeInterface
+    {
+        return $this->created;
+    }
+
+    public function setCreated(\DateTimeInterface $created): self
+    {
+        $this->created = $created;
+
+        return $this;
+    }
+
+    public function getChanged(): ?\DateTimeInterface
+    {
+        return $this->changed;
+    }
+
+    public function setChanged(\DateTimeInterface $changed): self
+    {
+        $this->changed = $changed;
+
+        return $this;
+    }
+
+    public function getStatus(): ?int
+    {
+        return $this->status;
+    }
+
+    public function setStatus(int $status): self
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    public function getStatusName(): string {
+        switch ($this->getStatus()) {
+            case self::CREATED:
+                return 'Created';
+                break;
+
+            case self::PROCESSED:
+                return 'Processed';
+                break;
+
+            case self::DELIVERED:
+                return 'Delivered';
+                break;
+
+            case self::FINISHED:
+                return 'Finished';
+                break;
+
+            default:
+                return 'Unprocessed';
+                break;
+        }
     }
 
 }

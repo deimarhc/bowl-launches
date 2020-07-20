@@ -20,31 +20,50 @@ jQuery(document).ready(function() {
         addOrderItemsForm($collectionHolder, $newLinkLi);
     });
 
-    const $getAddressesButton = $('<button type="button" class="btn-sm btn-outline-success mt-2">Refrescar direcciones</button>');
-    $('#order_user').after($getAddressesButton);
-    $getAddressesButton.on('click', function ($e) {
-        const addressSelect = $('#order_address');
-        // Remove current options
-        addressSelect.html('');
-        // Empty value ...
-        addressSelect.append('<option value>Selecciona una dirección</option>');
-        let user_id = $('#order_user').find(":selected").val();
-        console.log(user_id)
-        $.ajax('/api/form-ajax/addresses-by-user/' + user_id).done(function (data) {
-            console.log(data);
-            if (data) {
-                console.log('DENTROOO');
-                // Remove current options
-                addressSelect.html('');
-                // Empty value ...
-                addressSelect.append('<option value>Selecciona una dirección</option>');
-                $.each(data, function (key, address) {
-                    addressSelect.append('<option value="' + address.id + '">' + address.address + '</option>');
-                });
-                addressSelect.multipleSelect('refreshOptions', {})
-            }
+    function managerefreshAddresses() {
+        const $getAddressesButton = $('<button type="button" class="btn-sm btn-outline-success mt-2">Refrescar direcciones</button>');
+        $('#order_user').after($getAddressesButton);
+        $getAddressesButton.on('click', function ($e) {
+            const addressSelect = $('#order_address');
+            // Remove current options
+            addressSelect.html('');
+            // Empty value ...
+            addressSelect.append('<option value>Selecciona una dirección</option>');
+            let user_id = $('#order_user').find(":selected").val();
+            console.log(user_id)
+            $.ajax('/api/form-ajax/addresses-by-user/' + user_id).done(function (data) {
+                if (data) {
+                    // Remove current options
+                    addressSelect.html('');
+                    // Empty value ...
+                    addressSelect.append('<option value>Selecciona una dirección</option>');
+                    $.each(data, function (key, address) {
+                        addressSelect.append('<option value="' + address.id + '">' + address.address + '</option>');
+                    });
+                    addressSelect.multipleSelect('refreshOptions', {})
+                }
+            });
         });
-    })
+    }
+
+    function manageIngredientsDisplay() {
+        const $orderItems = $('.multiple-order-item fieldset');
+        $orderItems.each(function() {
+            const $selectLunches = $(this).find("select[id*='lunch']");
+            const isCustom = $selectLunches.find('option:selected').attr('data-is-custom');
+            if (isCustom) {
+                $(this).find('.ingredients-container').show();
+            }
+            else {
+                $(this).find('.ingredients-container').hide();
+            }
+            // Attach event.
+            $selectLunches.on('change', ingredientsDisplayOnChange);
+        });
+    }
+
+    managerefreshAddresses();
+    manageIngredientsDisplay();
 });
 
 function addOrderItemsForm($collectionHolder, $newLinkLi) {
@@ -67,15 +86,7 @@ function addOrderItemsForm($collectionHolder, $newLinkLi) {
     let $newForm = $(newForm);
     $newForm.find('select').multipleSelect({ selectAll: false });
     $newForm.find('#order_items_' + index + ' .ingredients-container').hide();
-    $newForm.find('#order_items_' + index + '_lunch').on('change', function () {
-        const isCustom = $(this).find('option:selected').attr('data-is-custom');
-        if (isCustom) {
-            $newForm.find('#order_items_' + index + ' .ingredients-container').show();
-        }
-        else {
-            $newForm.find('#order_items_' + index + ' .ingredients-container').hide();
-        }
-    });
+    $newForm.find('#order_items_' + index + '_lunch').on('change', ingredientsDisplayOnChange);
 
     // increase the index with one for the next item
     $collectionHolder.data('index', index + 1);
@@ -83,4 +94,15 @@ function addOrderItemsForm($collectionHolder, $newLinkLi) {
     // Display the form in the page in an li, before the "Add a tag" link li
     const $newFormLi = $('<li class="list-group-item"></li>').append($newForm);
     $newLinkLi.before($newFormLi);
+}
+
+// Show or hide ingredients select.
+function ingredientsDisplayOnChange() {
+    const isCustom = $(this).find('option:selected').attr('data-is-custom');
+    if (isCustom) {
+        $(this).parent().next('.ingredients-container').show();
+    }
+    else {
+        $(this).parent().next('.ingredients-container').hide();
+    }
 }

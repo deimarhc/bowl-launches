@@ -29,6 +29,9 @@ class UserType extends AbstractType
                 'entry_type' => AddressType::class,
                 'entry_options' => ['label' => false],
                 'allow_add' => true,
+                'attr' => [
+                    'class' => 'multiple-list-group'
+                ]
             ])
         ;
 

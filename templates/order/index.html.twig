@@ -13,6 +13,7 @@
                 <th>{% trans %}User{% endtrans %}</th>
                 <th>{% trans %}Address{% endtrans %}</th>
                 <th>{% trans %}Lunches{% endtrans %}</th>
+                <th>{% trans %}Status{% endtrans %}</th>
                 <th>{% trans %}Actions{% endtrans %}</th>
             </tr>
         </thead>
@@ -32,9 +33,17 @@
                 <td>
                     <ul class="list-group">
                         {% for item in order.items %}
-                            <li class="list-group-item d-flex justify-content-between align-items-center">{{ item.lunch.name }}<span class="badge badge-success badge-pill">{{ item.quantity }}</span></li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                {{ item.lunch.name }}
+                                <span class="badge badge-success badge-pill">
+                                    {{ item.quantity }}
+                                </span>
+                            </li>
                         {% endfor %}
                     </ul>
+                </td>
+                <td>
+                    {{ order.getStatusName|trans }}
                 </td>
                 <td>
                     <a class="btn-sm btn-outline-success" href="{{ path('order_show', {'id': order.id}) }}">{% trans %}Show{% endtrans %}</a>

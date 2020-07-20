@@ -4,6 +4,7 @@
         "bootstrap": "^4.5.0",
         "core-js": "^3.0.0",
         "jquery": "^3.5.1",
+        "multiple-select": "^1.5.2",
         "node-sass": "^4.14.1",
         "popper.js": "^1.16.1",
         "regenerator-runtime": "^0.13.2",
@@ -17,8 +18,5 @@
         "dev": "encore dev",
         "watch": "encore dev --watch",
         "build": "encore production --progress"
-    },
-    "dependencies": {
-        "multiple-select": "^1.5.2"
     }
 }

@@ -2,7 +2,7 @@
 
 {{ form_start(form) }}
     {{ form_widget(form) }}
-    <button class="btn btn-success">{{ button_label|default('Save') }}</button>
+    <button class="btn btn-success">{{ button_label|default('Save')|trans }}</button>
 {{ form_end(form) }}
 
 {% block stylesheets %}

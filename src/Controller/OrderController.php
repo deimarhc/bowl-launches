@@ -71,7 +71,12 @@ class OrderController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $entityManager = $this->getDoctrine()->getManager();
+            foreach ($order->getItems() as $item) {
+                $item->setPurchaseOrder($order);
+                $entityManager->persist($item);
+            }
+            $entityManager->flush();
 
             return $this->redirectToRoute('order_index');
         }

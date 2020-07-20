@@ -27,6 +27,7 @@ class OrderItemType extends AbstractType
                 'class' => Ingredient::class,
                 'choice_label' => 'name',
                 'multiple' => true,
+                'required' => false,
                 'row_attr' => [
                     'class' => 'ingredients-container'
                 ]
@@ -41,4 +42,3 @@ class OrderItemType extends AbstractType
         ]);
     }
 }
-
