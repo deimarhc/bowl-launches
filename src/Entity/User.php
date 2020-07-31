@@ -11,7 +11,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ *
  * @UniqueEntity(fields={"phone"}, message="There is already an account with this phone")
+ *
  * @ORM\HasLifecycleCallbacks()
  */
 class User implements UserInterface
@@ -35,6 +37,7 @@ class User implements UserInterface
 
     /**
      * @var string The hashed password
+     *
      * @ORM\Column(type="string")
      */
     private $password;
@@ -89,7 +92,8 @@ class User implements UserInterface
      * @ORM\PrePersist()
      * @ORM\PreUpdate()
      */
-    public function updateModifiedDatetime() {
+    public function updateModifiedDatetime()
+    {
         // update the modified time
         $this->setChanged(new \DateTime());
     }
@@ -293,5 +297,4 @@ class User implements UserInterface
 
         return $this;
     }
-
 }

@@ -19,9 +19,9 @@ class OrderItemType extends AbstractType
             ->add('lunch', EntityType::class, [
                 'class' => Lunch::class,
                 'choice_label' => 'name',
-                'choice_attr' => function(Lunch $lunch) {
+                'choice_attr' => function (Lunch $lunch) {
                     return ['data-is-custom' => $lunch->getIsCustom()];
-                }
+                },
             ])
             ->add('ingredients', EntityType::class, [
                 'class' => Ingredient::class,
@@ -29,8 +29,8 @@ class OrderItemType extends AbstractType
                 'multiple' => true,
                 'required' => false,
                 'row_attr' => [
-                    'class' => 'ingredients-container'
-                ]
+                    'class' => 'ingredients-container',
+                ],
             ])
         ;
     }

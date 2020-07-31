@@ -28,7 +28,7 @@ class OrderType extends AbstractType
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('u')
                         ->orderBy('u.created', 'DESC');
-                }
+                },
             ])
             ->add('address', EntityType::class, [
                 'class' => Address::class,
@@ -41,8 +41,8 @@ class OrderType extends AbstractType
                 'entry_options' => ['label' => false],
                 'allow_add' => true,
                 'attr' => [
-                    'class' => 'multiple-list-group multiple-order-item'
-                ]
+                    'class' => 'multiple-list-group multiple-order-item',
+                ],
             ])
         ;
 
@@ -56,7 +56,7 @@ class OrderType extends AbstractType
                     'Delivered' => Order::DELIVERED,
                     'Finished' => Order::FINISHED,
                 ],
-                'data' => $event->getData()->getStatus() ?: Order::FINISHED
+                'data' => $event->getData()->getStatus() ?: Order::FINISHED,
             ]);
         });
     }

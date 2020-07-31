@@ -40,7 +40,7 @@ class LunchController extends AbstractController
             /** @var UploadedFile $photoFile */
             $photoFile = $form->get('photoImage')->getData();
             if ($photoFile) {
-                $photoFilename = $fileUploader->upload($photoFile);
+                $photoFilename = $fileUploader->upload($photoFile, $this->getParameter('lunches_directory'));
                 $lunch->setPhoto($photoFilename);
             }
             $entityManager = $this->getDoctrine()->getManager();
@@ -69,12 +69,18 @@ class LunchController extends AbstractController
     /**
      * @Route("/{id}/edit", name="lunch_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Lunch $lunch): Response
+    public function edit(Request $request, Lunch $lunch, FileUploader $fileUploader): Response
     {
         $form = $this->createForm(LunchType::class, $lunch);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            /** @var UploadedFile $photoFile */
+            $photoFile = $form->get('photoImage')->getData();
+            if ($photoFile) {
+                $photoFilename = $fileUploader->upload($photoFile, $this->getParameter('lunches_directory'));
+                $lunch->setPhoto($photoFilename);
+            }
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('lunch_index');

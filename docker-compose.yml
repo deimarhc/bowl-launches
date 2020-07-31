@@ -1,0 +1,47 @@
+###############################################################################
+#                          Generated on phpdocker.io                          #
+###############################################################################
+version: "3.1"
+services:
+
+    mailhog:
+      image: mailhog/mailhog:latest
+      container_name: bowl-lunches-mailhog
+      ports:
+        - "8001:8025"
+
+    redis:
+      image: redis:alpine
+      container_name: bowl-lunches-redis
+
+    mariadb:
+      image: mariadb:10.4
+      container_name: bowl-lunches-mariadb
+      working_dir: /application
+      volumes:
+        - .:/application
+      environment:
+        - MYSQL_ROOT_PASSWORD=root
+        - MYSQL_DATABASE=bowl_lunches
+        - MYSQL_USER=root
+        - MYSQL_PASSWORD=root
+      ports:
+        - "8003:3306"
+
+    webserver:
+      image: nginx:alpine
+      container_name: bowl-lunches-webserver
+      working_dir: /application
+      volumes:
+          - .:/application
+          - ./phpdocker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+      ports:
+       - "8000:80"
+
+    php-fpm:
+      build: phpdocker/php-fpm
+      container_name: bowl-lunches-php-fpm
+      working_dir: /application
+      volumes:
+        - .:/application
+        - ./phpdocker/php-fpm/php-ini-overrides.ini:/etc/php/7.3/fpm/conf.d/99-overrides.ini

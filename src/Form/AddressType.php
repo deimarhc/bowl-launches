@@ -15,15 +15,15 @@ class AddressType extends AbstractType
         $builder
             ->add('department', ChoiceType::class, [
                 'choices' => [
-                    'Cundinamarca' => 'cundinamarca'
-                ]
+                    'Cundinamarca' => 'cundinamarca',
+                ],
             ])
             ->add('city', ChoiceType::class, [
                 'choices' => [
                     'Madrid' => 'madrid',
                     'Mosquera' => 'mosquera',
                     'Funza' => 'funza',
-                ]
+                ],
             ])
             ->add('neighborhood')
             ->add('address')

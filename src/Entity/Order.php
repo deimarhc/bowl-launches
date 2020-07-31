@@ -81,7 +81,8 @@ class Order
      * @ORM\PrePersist()
      * @ORM\PreUpdate()
      */
-    public function updateModifiedDatetime() {
+    public function updateModifiedDatetime()
+    {
         // update the modified time
         $this->setChanged(new \DateTime());
     }
@@ -206,7 +207,8 @@ class Order
         return $this;
     }
 
-    public function getStatusName(): string {
+    public function getStatusName(): string
+    {
         switch ($this->getStatus()) {
             case self::CREATED:
                 return 'Created';
@@ -229,5 +231,4 @@ class Order
                 break;
         }
     }
-
 }

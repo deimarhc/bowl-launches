@@ -30,8 +30,8 @@ class UserType extends AbstractType
                 'entry_options' => ['label' => false],
                 'allow_add' => true,
                 'attr' => [
-                    'class' => 'multiple-list-group'
-                ]
+                    'class' => 'multiple-list-group',
+                ],
             ])
         ;
 

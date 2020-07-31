@@ -1,4 +1,4 @@
-Create new user: Crear nuevo usuario
+Create user: Crear usuario
 Email: Correo electrónico
 Phone: Teléfono
 Role: Rol
@@ -48,3 +48,4 @@ Processed: Procesado
 Delivered: Enviado
 Finished: Finalizado
 Edit order: Editar orden
+No records found: No se encontraron resultados
